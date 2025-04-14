@@ -589,7 +589,10 @@ function App() {
                     ...(project.isMain && {
                       gridColumn: '1 / -1',
                       display: 'grid',
-                      gridTemplateColumns: '1fr 1fr',
+                      gridTemplateColumns: '1fr',
+                      '@media (min-width: 768px)': {
+                        gridTemplateColumns: '1fr 1fr'
+                      },
                       gap: '2rem'
                     })
                   }}
@@ -606,118 +609,119 @@ function App() {
                 >
                   <div style={{
                     position: 'relative',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    height: project.isMain ? '300px' : '400px',
+                    '@media (min-width: 768px)': {
+                      height: project.isMain ? '100%' : '400px'
+                    }
                   }}>
+                    {project.images.map((image, imgIndex) => (
+                      <img 
+                        key={imgIndex}
+                        src={image} 
+                        alt={`${project.title} - imagen ${imgIndex + 1}`}
+                        style={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          transition: 'opacity 0.5s ease',
+                          opacity: currentImageIndex === imgIndex ? 1 : 0
+                        }}
+                      />
+                    ))}
                     <div style={{
-                      position: 'relative',
-                      width: '100%',
-                      height: project.isMain ? '100%' : '400px',
+                      position: 'absolute',
+                      bottom: '1rem',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      display: 'flex',
+                      gap: '0.5rem',
+                      zIndex: 2
                     }}>
-                      {project.images.map((image, imgIndex) => (
-                        <img 
+                      {project.images.map((_, imgIndex) => (
+                        <button
                           key={imgIndex}
-                          src={image} 
-                          alt={`${project.title} - imagen ${imgIndex + 1}`}
+                          onClick={() => setCurrentImageIndex(imgIndex)}
                           style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            transition: 'opacity 0.5s ease',
-                            opacity: currentImageIndex === imgIndex ? 1 : 0
+                            width: '8px',
+                            height: '8px',
+                            borderRadius: '50%',
+                            border: 'none',
+                            background: currentImageIndex === imgIndex ? colors.primary : `${colors.primary}40`,
+                            cursor: 'pointer',
+                            padding: 0,
+                            transition: 'all 0.3s ease'
                           }}
                         />
                       ))}
-                      <div style={{
-                        position: 'absolute',
-                        bottom: '1rem',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        display: 'flex',
-                        gap: '0.5rem',
-                        zIndex: 2
-                      }}>
-                        {project.images.map((_, imgIndex) => (
-                          <button
-                            key={imgIndex}
-                            onClick={() => setCurrentImageIndex(imgIndex)}
-                            style={{
-                              width: '8px',
-                              height: '8px',
-                              borderRadius: '50%',
-                              border: 'none',
-                              background: currentImageIndex === imgIndex ? colors.primary : `${colors.primary}40`,
-                              cursor: 'pointer',
-                              padding: 0,
-                              transition: 'all 0.3s ease'
-                            }}
-                          />
-                        ))}
-                      </div>
-                      <div style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '1rem',
-                        transform: 'translateY(-50%)',
-                        display: 'flex',
-                        gap: '1rem',
-                        zIndex: 2
-                      }}>
-                        <button
-                          onClick={() => setCurrentImageIndex(prev => prev === 0 ? project.images.length - 1 : prev - 1)}
-                          style={{
-                            background: `${colors.background}80`,
-                            border: 'none',
-                            borderRadius: '50%',
-                            width: '40px',
-                            height: '40px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer',
-                            color: colors.text,
-                            fontSize: '1.5rem',
-                            transition: 'all 0.3s ease'
-                          }}
-                        >
-                          ←
-                        </button>
-                      </div>
-                      <div style={{
-                        position: 'absolute',
-                        top: '50%',
-                        right: '1rem',
-                        transform: 'translateY(-50%)',
-                        display: 'flex',
-                        gap: '1rem',
-                        zIndex: 2
-                      }}>
-                        <button
-                          onClick={() => setCurrentImageIndex(prev => prev === project.images.length - 1 ? 0 : prev + 1)}
-                          style={{
-                            background: `${colors.background}80`,
-                            border: 'none',
-                            borderRadius: '50%',
-                            width: '40px',
-                            height: '40px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer',
-                            color: colors.text,
-                            fontSize: '1.5rem',
-                            transition: 'all 0.3s ease'
-                          }}
-                        >
-                          →
-                        </button>
-                      </div>
+                    </div>
+                    <div style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '1rem',
+                      transform: 'translateY(-50%)',
+                      display: 'flex',
+                      gap: '1rem',
+                      zIndex: 2
+                    }}>
+                      <button
+                        onClick={() => setCurrentImageIndex(prev => prev === 0 ? project.images.length - 1 : prev - 1)}
+                        style={{
+                          background: `${colors.background}80`,
+                          border: 'none',
+                          borderRadius: '50%',
+                          width: '40px',
+                          height: '40px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: 'pointer',
+                          color: colors.text,
+                          fontSize: '1.5rem',
+                          transition: 'all 0.3s ease'
+                        }}
+                      >
+                        ←
+                      </button>
+                    </div>
+                    <div style={{
+                      position: 'absolute',
+                      top: '50%',
+                      right: '1rem',
+                      transform: 'translateY(-50%)',
+                      display: 'flex',
+                      gap: '1rem',
+                      zIndex: 2
+                    }}>
+                      <button
+                        onClick={() => setCurrentImageIndex(prev => prev === project.images.length - 1 ? 0 : prev + 1)}
+                        style={{
+                          background: `${colors.background}80`,
+                          border: 'none',
+                          borderRadius: '50%',
+                          width: '40px',
+                          height: '40px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: 'pointer',
+                          color: colors.text,
+                          fontSize: '1.5rem',
+                          transition: 'all 0.3s ease'
+                        }}
+                      >
+                        →
+                      </button>
                     </div>
                   </div>
                   <div style={{
-                    padding: '3rem',
+                    padding: '2rem',
+                    '@media (min-width: 768px)': {
+                      padding: '3rem'
+                    },
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '1.5rem',
@@ -725,12 +729,18 @@ function App() {
                   }}>
                     <div style={{
                       display: 'flex',
-                      alignItems: 'center',
+                      flexDirection: 'column',
                       gap: '1rem',
-                      marginBottom: '0.5rem'
+                      '@media (min-width: 768px)': {
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                      }
                     }}>
                       <h3 style={{
-                        fontSize: '2rem',
+                        fontSize: '1.5rem',
+                        '@media (min-width: 768px)': {
+                          fontSize: '2rem'
+                        },
                         fontWeight: '700',
                         color: colors.primaryLight,
                         margin: 0,
@@ -753,7 +763,8 @@ function App() {
                         fontSize: '0.875rem',
                         fontWeight: '600',
                         border: `1px solid ${colors.primary}40`,
-                        whiteSpace: 'nowrap'
+                        whiteSpace: 'nowrap',
+                        width: 'fit-content'
                       }}>
                         ESTADO: BETA
                       </span>
@@ -761,7 +772,10 @@ function App() {
                     <p style={{
                       color: colors.textSecondary,
                       lineHeight: '1.8',
-                      fontSize: '1.125rem',
+                      fontSize: '1rem',
+                      '@media (min-width: 768px)': {
+                        fontSize: '1.125rem'
+                      },
                       opacity: 0.9,
                       transition: 'opacity 0.3s ease'
                     }}
@@ -786,7 +800,10 @@ function App() {
                           background: `${colors.primary}20`,
                           color: colors.primaryLight,
                           borderRadius: '50px',
-                          fontSize: '1rem',
+                          fontSize: '0.875rem',
+                          '@media (min-width: 768px)': {
+                            fontSize: '1rem'
+                          },
                           fontWeight: '500',
                           transition: 'all 0.3s ease',
                           transform: 'translateY(0)'
@@ -812,7 +829,10 @@ function App() {
                       href={"https://matiasozores.github.io/campus-virtual-programacion/"}
                       style={{
                         display: 'inline-block',
-                        padding: '1rem 2rem',
+                        padding: '0.75rem 1.5rem',
+                        '@media (min-width: 768px)': {
+                          padding: '1rem 2rem'
+                        },
                         background: `linear-gradient(90deg, ${colors.primary}, ${colors.primaryDark})`,
                         color: colors.text,
                         borderRadius: '50px',
@@ -822,7 +842,10 @@ function App() {
                         marginTop: '1.5rem',
                         position: 'relative',
                         overflow: 'hidden',
-                        fontSize: '1.125rem'
+                        fontSize: '1rem',
+                        '@media (min-width: 768px)': {
+                          fontSize: '1.125rem'
+                        }
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.transform = 'translateY(-2px)';
