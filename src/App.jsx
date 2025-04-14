@@ -165,9 +165,9 @@ function App() {
       isMain: true,
       technologies: ["HTML", "CSS", "React", "JavaScript"],
       images: [
-        "/src/assets/images/image1.png",
-        "/src/assets/images/image2.png",
-        "/src/assets/images/image3.png"
+        "/portfolio-web/assets/images/image1.png",
+        "/portfolio-web/assets/images/image2.png",
+        "/portfolio-web/assets/images/image3.png"
       ]
     }
   ];
