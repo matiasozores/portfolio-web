@@ -218,7 +218,7 @@ function App() {
       overflow: 'hidden'
     }}>
       <a 
-        href="/assets/cv/MATIAS_OZORES.pdf" 
+        href="/portfolio-web/assets/cv/MATIAS_OZORES.pdf" 
         download="MATIAS_OZORES.pdf"
         target="_blank"
         rel="noopener noreferrer"
