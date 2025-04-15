@@ -353,7 +353,7 @@ function App() {
               marginRight: 'auto',
               lineHeight: '1.6'
             }}>
-            "Todos los días me esfuerzo en mantener la constancia, la disciplina y la resistencia para luchar contra mis problemas, sin importar lo difícil que sea"
+           Página web personal donde comparto mi enfoque, formación y proyectos como desarrollador
             </p>
             <a 
               href="#about" 
